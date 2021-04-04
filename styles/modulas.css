@@ -1,0 +1,17 @@
+ main img{
+    width: 200px;
+    height:200px;
+    float:left;
+}
+
+main h2 {
+
+    color: brown;
+    font-family: 'Caveat', cursive;;
+}
+
+main h3 {
+
+    color :coral ;
+}
+
