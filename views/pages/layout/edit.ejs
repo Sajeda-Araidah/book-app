@@ -1,0 +1,15 @@
+<form action="/books/<%=book.id%>?_method=PUT" method="post" id="updateForm" class="formHidden">
+    <label for="">Title</label>
+    <input  name="title" value="<%= book.title %>">
+     <br>
+     <label for="">Author</label>
+    <input name="author" value="<%= book.author %>">
+    <br>
+    <label for="">ISBN</label>
+    <input name="isbn" value="<%= book.isbn %>">
+    <br>
+    <label for="">Description</label>
+    <textarea name="description" cols="30" rows="10"><%= book.description %></textarea>
+    <br>
+    <button type="submit" id="save_button">Update Info</button>
+</form>

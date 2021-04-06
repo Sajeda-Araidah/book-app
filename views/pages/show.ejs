@@ -1,22 +1,53 @@
-  
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Book Collection</title>
-    <link rel="stylesheet" href="/styles/reset.css">
-    <link rel="stylesheet" href="/styles/base.css">
-    <link rel="stylesheet" href="/styles/layout.css">
-    <link rel="stylesheet" href="/styles/modulas.css">
-  </head>
-  <body>
-    <main>
-      <% searchResults.forEach( book => { %>
-          <img src="<%= book.img.thumbnail %>" >
-            <h2><%= book.title %></h2>
-            <h3><%= book.authers %></h3>
-            <h4><%= book.description  %></h4>
-            
-        <% }) %>
-    </main>
-  </body>
+
+<head>
+  <%- include ('../../layout/head') %>
+</head>
+
+<body>
+  <header>
+    <%- include ('../../layout/header') %>
+  </header>
+  <main>
+    <% searchResults.forEach( book=> { %>
+      <div>
+        <img src=' <%= book.image%> ' />
+        <h3>
+          <%= book.title %>
+        </h3>
+        <h4>
+          <%= book.authors %>
+        </h4>
+        <p>
+          <%= book.description %>
+        </p>
+        <h6>
+          <%=book.isbn %>
+        </h6>
+        
+
+
+        <form action="/books" method="post">
+          <label for="">Title</label>
+          <input type="hidden" name="title" value="<%= book.title %>">
+          <br>
+          <label for="">Authors</label>
+          <input type="hidden" name="author" value="<%= book.authors %>">
+          <br>
+          <label for="">ISBN</label>
+          <input type="hidden" name="isbn" value="<%= book.isbn %>">
+          <br>
+          <input type="hidden" name="image_url" value="<%= book.image %>">
+          <br>
+          <label for="">Description</label>
+          <input type="hidden" name="description" value="<%= book.description %>">
+          <br>
+          <button type="submit" id="save_button">Save To Collection</button>
+        </form>
+      </div>
+      <% }) %>
+  </main>
+</body>
+
 </html>
