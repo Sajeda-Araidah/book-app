@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include ('../../layout/head') %>
+    <%- include ('./layout/head') %>
   </head>
   <body >
     <body>
       <header>
-        <%- include('../views/layout/header') %>
+      <%- include('./layout/header') %>
       </header>
       <main>
         <h4>My Book Collection</h4>
-        <p>
-          You have <%= count %> saved locally.
-        </p>
+       
         <div>
-          <%- include('./books/details') %>
+          <%- include('books/details') %>
         </div>
       </main>
     </body>

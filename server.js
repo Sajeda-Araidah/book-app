@@ -4,6 +4,7 @@
 const express = require('express');
 const superagent = require('superagent');
 const pg = require('pg');
+const methodOverride = require('method-override');
 
 // Application Setup
 const app = express();
@@ -12,6 +13,7 @@ const PORT = process.env.PORT || 3000;
 // Application Middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public/styles'));
+app.use(methodOverride('_method'));
 
 // Set the view engine for server-side templating
 app.set('view engine', 'ejs');
@@ -33,13 +35,22 @@ app.post('/searches', createSearch);
 //Render One Book
 app.get('/books/:id', getOneBook);
 
+
+//Update One Book
+app.put('/books/:id', editOneBook); 
+//delete One Book
+app.delete('/books/:id',deleteOneBook)
+
 //Save Book
 app.post('/books', saveBook);
 
 // Catch-all
 app.get('*', (request, response) => response.status(404).send('This route does not exist'));
 
-app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
+client.connect().then(()=>{
+  app.listen(PORT, () => {console.log(`Listening to Port ${PORT}`);});
+});
+
 
 // HELPER FUNCTIONS
 // Only show part of this to get students started
@@ -102,4 +113,41 @@ function saveBook(request,response){
     client.query(SQL, values).then(()=> {
       response.redirect('/');
   });
+
+
+  function saveBook(request,response){
+      const {title, author, isbn, image_url, description} = request.body;
+      const values = [title, author, isbn, image_url, description];
+      const SQL = `INSERT INTO Books (title, author, isbn, image_url, description)
+                  VALUES ($1, $2, $3, $4, $5) RETURNING * `;
+  
+      client.query(SQL, values).then(()=> {
+        response.redirect('/');
+    });
+    }
+  
+  function editOneBook(request,response){
+    const id = request.params.id;
+    const {title, author, isbn, description} = request.body;
+    let values = [title, author, isbn, description, id];
+    const SQL = `UPDATE Books
+                  SET  
+                  title=$1,
+                  author=$2,
+                  isbn=$3,
+                  description=$4 
+                  WHERE id=$5`
+    client.query(SQL, values).then(results=> {
+      response.redirect(`/books/${id}`);
+  })
+  
   }
+  function deleteOneBook(request,response){
+    const id = request.params.id;
+    let values = [id];
+    const SQL=`DELETE FROM Books WHERE id=$1`
+    client.query(SQL, values).then(results=> {
+      response.redirect(`/`);
+  })
+  }
+}
