@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include ('../../layout/head') %>
+  </head>
+  <header>    
+    <%- include ('../../layout/header') %>
+  </header>
+  <body>
+    <main>
+        <div>
+            <img src=' <%= book.image_url %> '   />
+            <h3><%= book.title %></h3>
+            <h4><%=book.author %></h4>
+            <p><%=book.description %></p>
+            <p><%=book.isbn %></p>
+            <button>Update</button>
+            <form action="/books/<%=book.id%>?_method=DELETE" method="post">
+              <button>Delete</button>
+            </form>
+        </div>
+        <div>
+          <%- include('../../layout/edit')%>
+        </div>
+    </main>
+   
+  </body>
+  <script>
+  
+  </script>
+</html>
